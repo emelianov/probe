@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Loading...</title>
+<link rel="stylesheet" href="template.css" />
+<script type="text/javascript" src="/dbBRiDGE/xmldata.js"></script>
+<script type="text/javascript" src="/dbBRiDGE/template.js"></script>
+<script type="text/javascript" src="/dbBRiDGE/helper.js"></script>
+<script type="text/javascript" src="probe.js"></script>
+<script>
+var IDS = "ids"; //Cookie name used to store selected items
+
+function display() {
+   if(this.readyState==4 && this.status==200) {
+    var resp=this.responseXML;
+    if(resp!=null){
+     var got = new XmlData(resp);			//Convert XML to array
+    if (typeof got.page[0].header !== 'undefined')
+     document.title = got.page[0].header[0]._text;
+    var box = document.getElementById('box');
+    var list;
+    var form;
+    var data;
+    if (typeof got.page[0].data !== 'undefined') {
+      data = got.page[0].data[0];		//DATA part
+      if (typeof got.page[0].list !== 'undefined') {
+       list = got.page[0].list;			//LIST template
+       var listBox = document.getElementById('list');
+       clear(listBox);
+       showList(listBox, list, data);
+      }
+    }
+    if (typeof got.page[0].form !== 'undefined') {
+     form = got.page[0].form[0];			//FORM template
+     clear(box);
+     showForm(box, form, data, 0);
+     setEdit(form, false);
+    }
+    //
+   }
+ }
+}
+
+//Refresh selected items callback function
+function refresh() {
+   if(this.readyState==4 && this.status==200) {
+    var resp=this.responseXML;
+    if(resp!=null){
+     var got = new XmlData(resp);			//Convert XML to array
+    var list;
+    var data;
+    if (typeof got.page[0].data !== 'undefined') {
+      data = got.page[0].data[0];		//DATA part
+      var ids = getCookie(IDS);
+      if (ids != '') {
+          data = localSort(data, 'child', 'id', ids.split(','));
+      }
+      if (typeof got.page[0].list !== 'undefined') {
+       list = got.page[0].list;			//LIST template
+       var selectBox = document.getElementById('select');
+       clear(selectBox);
+       showList(selectBox, list, data);
+       readCallback();
+      }
+    }
+   }
+  }
+}
+
+// Generic data get request
+// s - URL to request
+// f - callback function
+function get(s, f) {
+  s=s||'';
+  var request=new XMLHttpRequest();
+  request.onreadystatechange = f;
+  request.open('GET', s, true);
+  request.send(null);
+}
+
+function validate() {
+ return true;
+}
+
+// Search button reaction
+// text - text to search
+function lookFor(text) {
+ get("/dbBRiDGE/form.php?t=childbyname&NAME="+encodeURIComponent(text), display);
+}
+
+// Show item
+// id - item to show
+function show(id) {
+ get("/dbBRiDGE/form.php?t=child&ID="+id, display);
+}
+
+// Add to item select list. Duplicated items to be skipped.
+// id - item to add
+function add(id) {
+ if (typeof id !== 'undefined' && id != "") {
+    var ids = getCookie(IDS);
+    var idsElements = new Array();
+    idsElements = ids.split(',');
+    if (idsElements.indexOf(id) == -1) {
+        if (ids != "") {
+    	ids = ids + ",";
+	}
+        ids = ids + id;
+	setCookie(IDS, ids, 1);
+	get("/dbBRiDGE/form.php?t=childbyid&ID=" + ids, refresh);
+    }
+ }
+}
+
+function up(id,inc=1) {
+ var ids = getCookie(IDS);
+ var idsElements = new Array();
+ idsElements = ids.split(',');
+ var idPos = idsElements.indexOf(id);
+ if ((idPos+inc > 1 || inc < 0) && ((idPos+inc < idsElements.length - 1) || inc > 0)) {
+  var tmp = idsElements[idPos];
+  idsElements[idPos] = idsElements[idPos-inc];
+  idsElements[idPos-inc] = tmp;
+  ids = idsElements.join();
+  setCookie(IDS, ids, 1);
+  get("/dbBRiDGE/form.php?t=childbyid&ID="+ids, refresh);
+ }
+}
+function down(id) {
+ up(id, -1);
+}
+
+// Display form to create new item callback function
+function newChild() {
+   if(this.readyState==4 && this.status==200) {
+    var resp=this.responseXML;
+    if(resp!=null){
+     var got = new XmlData(resp);			//Convert XML to array
+    var form;
+    var data;
+    if (typeof got.page[0].data !== 'undefined') {
+      data = got.page[0].data[0];		//DATA part
+      if (typeof got.page[0].form !== 'undefined') {
+       form = got.page[0].form[0];			//LIST template
+       var selectBox = document.getElementById('box');
+       clear(selectBox);
+       showForm(selectBox, form, data);
+	setEdit(form, true);
+	document.getElementById('buttonEdit').hidden=true;
+	document.getElementById('buttonSubmit').hidden=false;
+      }
+    }
+   }
+  }
+}
+
+var localContents = '';
+// Initial data load. Called from onLoad.
+function readCallback(contents='') {
+ if (contents == '') {
+    contents = localContents;
+ } else {
+    localContents = contents;
+ }
+ var probe = probeList(contents);
+ var select = document.getElementById('selecttable');
+ if (typeof select !== 'undefined') {
+  for (var i = 0; i < probe.length; i++) {
+    if (i <= select.rows.length) {
+        var row = select.rows[i];
+        var cell = row.insertCell(-1);
+	cell.innerHTML = probe[i][2];
+    }
+  }
+ }
+}
+function postLoad() {
+// getIO("/form.php?t=child&ID=0&TITLE=Select children");
+ get("/dbBRiDGE/form.php?t=child&ID=0&TITLE=Select children", display);
+ var arr = document.URL.match(/append=([0-9]+)/)
+ if (arr != null && typeof  arr[1] !== 'undefined') {
+    add(arr[1]);
+ }
+ var ids = getCookie(IDS);
+ get("/dbBRiDGE/form.php?t=childbyid&ID=" + ids, refresh);
+ document.getElementById('file-input').addEventListener('change', readSingleFile, false);
+ readFileCallback = readCallback;
+}
+</script>
+
+</head>
+<body onload='postLoad();'>
+<form method="post" action="/dbBRiDGE/form.php?t=child&action=save">
+<div id="header"></div>
+<div id="select"></div>
+<input id="search" type="text">
+<input type="button" value="Search" onClick="lookFor(document.getElementById('search').value);return true;">
+<input type="button" value="New" onClick="get('/dbBRiDGE/form.php?action=new',newChild);return true;">
+<input type="button" value="Clear" onClick="setCookie(IDS, '', 1);return true;">
+<input type="file" id="file-input" onChange="readSingleFile();return true;">
+<input type="button" value="Raw data" onClick="el = document.getElementById('file-content'); el.hidden = !el.hidden; return true;">
+
+<pre hidden id="file-content"></pre>
+
+<div id="list"></div>
+<div id="box"></div>
+<div id="actions">
+<input id="buttonEdit" type="button" value="Edit" onClick="setEditMode(true);buttonEdit.hidden=true;buttonSubmit.hidden=false;return true;">
+<input hidden id="buttonSubmit" type="Submit" value="Save">
+<!-- onClick="setEditMode(false);return validate();"> -->
+</div>
+</form></body>
+</html>

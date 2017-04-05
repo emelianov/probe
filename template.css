@@ -1,0 +1,14 @@
+.box{float:top; width:400px; border-spacing:0px 1px; margin:0 0px 0px 0;border-top:1px solid #EEE;padding: 0 0px 0 0px;text-align:left;}
+.bold{font-size:150%;color:black;font-weight:bold;}
+.hcell{color:black;margin:0;border-left:1px solid #EEE;}
+.htune{color:white;background-color:#777;font-weight: bold;text-align:center;border:1px solid black;width:20px;cursor:pointer;}
+p, form,button{font-size:100%;color:#252525;}
+.small_text{font-size:90%;color:#737373;}
+.odd{background-color:#F0F0F0;}
+.center{text-align:center;}
+.left{text-align:left;}
+.on{background-color:black;color:white;text-align:center;padding:2px;}
+.off{border:1px solid black;text-align:center;padding:2px;cursor:pointer;}
+.t1{font-size:75%;border:1px solid black;text-align:center;padding:2px;}
+.t2{font-size:75%;background-color:black;color:white;text-align:center;padding:2px;}
+.inputs{width:100%;}

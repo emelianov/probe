@@ -1,0 +1,178 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+<page>
+
+ <header>{ID}</header>
+ <label>{TITLE}</label>
+
+<form>
+
+ <group name="one">
+  <label>Group label</label>
+ </group>
+
+ <field type="hidden" name="did">
+  <dbname>child</dbname><dbfield>id</dbfield>
+  <readonly>1</readonly>
+ </field>
+
+
+ <field type="text" name="clname">
+  <dbname>child</dbname><dbfield>lname</dbfield>
+  <label>Child last name</label>
+  <width>32</width>
+  <group>one</group>
+  <defaultvalue>Fam</defaultvalue>
+  <readonly>0</readonly>
+  <hidden>0</hidden>
+  <disabled>0</disabled>
+  <valid>regex</valid>
+ </field>
+
+ <field type="text" name="cfname">
+  <dbname>child</dbname><dbfield>fname</dbfield>
+  <label>Child first name</label>
+  <width>32</width>
+  <group>one</group>
+  <defaultvalue>Name</defaultvalue>
+  <readonly>0</readonly>
+  <hidden>0</hidden>
+  <disabled>0</disabled>
+  <valid>regex</valid>
+ </field>
+
+ <field type="text" name="cmname">
+  <dbname>child</dbname><dbfield>mname</dbfield>
+  <label>Child middle name</label>
+  <width>32</width>
+  <group>one</group>
+  <defaultvalue>Middle</defaultvalue>
+  <readonly>0</readonly>
+  <hidden>0</hidden>
+  <disabled>0</disabled>
+  <valid>regex</valid>
+ </field>
+
+
+
+
+ <field type="date" name="cdate">
+  <dbname>child</dbname><dbfield>birth</dbfield>
+  <label>Child birthday (DD.MM.YYYY)</label>
+  <group>one</group>
+  <defaultvalue>2016-01-01</defaultvalue>
+  <valid>regex</valid>
+ </field>
+
+ <field type="select" name="cregid">
+  <dbname>child</dbname><dbfield>region_id</dbfield>
+  <label>Region</label>
+  <help>Выберите значение</help>
+  <readonly>1</readonly>
+
+  <dic type="static" name="regidl">
+   <dbname>region</dbname> <text>name</text> <value>id</value>
+  </dic>
+ </field>
+
+ <field type="text" name="caddress">
+  <dbname>child</dbname><dbfield>address</dbfield>
+  <label>Child address</label>
+  <group>one</group>
+  <valid>regex</valid>
+ </field>
+
+ <field type="select" name="csex">
+  <dbname>child</dbname><dbfield>sex</dbfield>
+  <label>Sex</label>
+  <help>Выберите значение</help>
+  <readonly>1</readonly>
+
+  <dic type="const" name="csexl">
+   <text>Male</text><value>0</value>
+   <text>Famale</text><value>1</value>
+  </dic>
+ </field>
+
+ <field type="select" name="ccount">
+  <dbname>child</dbname><dbfield>nn</dbfield>
+  <label>Count</label>
+  <help>Выберите значение</help>
+  <defaultvalue>3</defaultvalue>
+  <readonly>1</readonly>
+
+  <dic type="const" name="ccountl">
+   <text>1</text><value>1</value>
+   <text>2</text><value>2</value>
+   <text>3</text><value>3</value>
+   <text>4</text><value>4</value>
+   <text>5</text><value>5</value>
+   <text>6</text><value>6</value>
+  </dic>
+ </field>
+
+ <field type="select" name="cdoctorid">
+  <dbname>child</dbname><dbfield>doctor_id</dbfield>
+  <label>Doctor</label>
+  <help>Выберите значение</help>
+  <readonly>1</readonly>
+
+  <dic type="static" name="regidl">
+   <dbname>doctor</dbname> <text>name</text> <value>id</value>
+  </dic>
+ </field>
+
+ <field type="text" name="cphone">
+  <dbname>child</dbname><dbfield>phone</dbfield>
+  <label>Child phone</label>
+  <group>one</group>
+  <valid>regex</valid>
+ </field>
+
+ <field type="text" name="anamnez">
+  <dbname>child</dbname><dbfield>anamnez</dbfield>
+  <label>Child anamnez</label>
+  <group>one</group>
+  <valid>regex</valid>
+ </field>
+
+ <field type="text" name="cglength">
+  <dbname>child</dbname><dbfield>glength</dbfield>
+  <label>Gistation length</label>
+  <group>one</group>
+  <valid>regex</valid>
+ </field>
+
+ <field type="text" name="cweight">
+  <dbname>child</dbname><dbfield>weight</dbfield>
+  <label>Weigth</label>
+  <group>one</group>
+  <valid>regex</valid>
+ </field>
+
+ <onsave>/child.html?append=</onsave>
+
+</form>
+
+<db>
+ <name>child</name>
+ <field>id</field>
+ <field>lname</field>
+ <field>fname</field>
+ <field>mname</field>
+ <field>birth</field>
+ <field>region_id</field>
+ <field>address</field>
+ <field>sex</field>
+ <field>nn</field>
+ <field>doctor_id</field>
+ <field>phone</field>
+ <field>anamnez</field>
+ <field>glength</field>
+ <field>weight</field>
+ <field>note</field>
+ <where>id = {ID}</where>
+</db>
+<db><name>doctor</name><field>id</field><field>name</field><order>name</order></db>
+<db><name>lpu</name><field>id</field><field>name</field></db>
+<db><name>region</name><field>id</field><field>name</field></db>
+</page>

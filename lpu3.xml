@@ -1,0 +1,35 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+<page>
+ <header>LPUs</header>
+
+<form>
+
+ <group name="one">
+  <label>Group label</label>
+ </group>
+
+ <field type="hidden" name="id">
+  <dbname>lpu</dbname><dbfield>id</dbfield>
+  <readonly>1</readonly>
+ </field>
+
+ <field type="text" name="name">
+  <dbname>lpu</dbname><dbfield>name</dbfield>
+  <label>LPU name</label>
+  <width>32</width>
+  <group>one</group>
+  <defaultvalue>Name Fam</defaultvalue>
+  <readonly>0</readonly>
+  <hidden>0</hidden>
+  <disabled>0</disabled>
+  <valid>regex</valid>
+ </field>
+
+</form>
+
+<db>
+ <name>lpu</name>
+ <field>id</field>
+ <field>name</field>
+</db>
+</page>
