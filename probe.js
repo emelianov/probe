@@ -5,6 +5,9 @@ const COUNTS = 1;
 const CONC = 2;
 const UNIT = 3;
 const PCV = 4;
+
+const T = ["NEO     17-a OHP", "NTSHS   neo-hTSH", "NIRT    Neonatal", "PKU   ", "NEONATAL GAO"];
+
 var contents;
 var readFileCallback;
 function readSingleFile(e) {
@@ -41,7 +44,7 @@ function probeList(contents) {
   if (str[i].indexOf("NTSHS") == -1) { 
   if (str[i].indexOf("CODE") == -1) {
    var line = new Array();
-     line = str[i].trim().split(/\s+/);
+   line = str[i].trim().split(/\s+/);
    if (line[0] != 'STD' && line[0] != 0) {
     if (line.length >= 4) {
      if (line.length < 5) {
@@ -57,8 +60,45 @@ function probeList(contents) {
  }
  return res; 
 }
-
+var tp = -1;
+var dt;
 function displayContents(contents) {
+var t = contents;
+for (j = 0; j < T.length; j++) {
+ var p = t.indexOf(T[j]);
+ if (p > 0) {
+  tp = j;
+  alert(p + " " + j);
+  dt = t.substring(p,40);
+  alert(dt);
+  break;
+ }
+}
+var x = "";
+var res = new Array();
+ var str = t.split(String.fromCharCode(13)+String.fromCharCode(10)+String.fromCharCode(13));
+ for (i = 0; i < str.length; i++) {
+  if (str[i].charAt(0) == ' ' && str[i].charAt(1) == ' ') {
+//    x += "|"+ str[i] + '<br>';
+   var line = new Array();
+   line = str[i].trim().split(/\s+/);
+   if (line[0] != 'STD' && line[0] != 0) {
+    if (line.length >= 3) {
+     if (line.length < 4) {
+      line.push('');
+     }
+     res.push(line);
+    }
+   }
+   x += line[0] + "|" + line[1] + "|" + line[2] + "|" + ((typeof(line[3]) != 'undefined')?line[3]:"") + "<br>";
+  }
+ }
+ var element = document.getElementById('file-content');
+ element.innerHTML = x;
+ return res;
+}
+
+function xdisplayContents(contents) {
  var t = "";
  var i = contents.indexOf("NTSHS");
  for (; i < contents.length; i++) {

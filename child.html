@@ -10,6 +10,7 @@
 <script type="text/javascript" src="probe.js"></script>
 <script>
 var IDS = "ids"; //Cookie name used to store selected items
+var lastForm;
 
 function display() {
    if(this.readyState==4 && this.status==200) {
@@ -18,7 +19,7 @@ function display() {
      var got = new XmlData(resp);			//Convert XML to array
     if (typeof got.page[0].header !== 'undefined')
      document.title = got.page[0].header[0]._text;
-    var box = document.getElementById('box');
+    var box = document.getElementById('detText');
     var list;
     var form;
     var data;
@@ -36,6 +37,11 @@ function display() {
      clear(box);
      showForm(box, form, data, 0);
      setEdit(form, false);
+     var detales = document .getElementById('detales');
+     detales.hidden = false;
+	lastForm = form;
+	document.getElementById('buttonEdit').hidden=false;
+	document.getElementById('buttonSubmit').hidden=true;
     }
     //
    }
@@ -163,7 +169,8 @@ function readCallback(contents='') {
  } else {
     localContents = contents;
  }
- var probe = probeList(contents);
+ //var probe = probeList(contents);
+ var probe = displayContents(contents);
  var select = document.getElementById('selecttable');
  if (typeof select !== 'undefined') {
   for (var i = 0; i < probe.length; i++) {
@@ -191,24 +198,34 @@ function postLoad() {
 
 </head>
 <body onload='postLoad();'>
+<div id="header">&nbsp;</div>
+<div align=center>
 <form method="post" action="/dbBRiDGE/form.php?t=child&action=save">
 <div id="header"></div>
 <div id="select"></div>
 <input id="search" type="text">
 <input type="button" value="Search" onClick="lookFor(document.getElementById('search').value);return true;">
-<input type="button" value="New" onClick="get('/dbBRiDGE/form.php?action=new',newChild);return true;">
+<input type="button" value="New" onClick="get('/dbBRiDGE/form.php?t=child&action=new',newChild);return true;">
 <input type="button" value="Clear" onClick="setCookie(IDS, '', 1);return true;">
 <input type="file" id="file-input" onChange="readSingleFile();return true;">
-<input type="button" value="Raw data" onClick="el = document.getElementById('file-content'); el.hidden = !el.hidden; return true;">
+<input type="button" value="Raw data" onClick="el = document.getElementById('raw'); el.hidden = !el.hidden; return true;">
 
-<pre hidden id="file-content"></pre>
+<div hidden id="raw">
+ <pre id="file-content"></pre>
+ <input type="button" value="Close" onClick="document.getElementById('raw').hidden=true; return true;">
+</div>
 
 <div id="list"></div>
 <div id="box"></div>
-<div id="actions">
-<input id="buttonEdit" type="button" value="Edit" onClick="setEditMode(true);buttonEdit.hidden=true;buttonSubmit.hidden=false;return true;">
-<input hidden id="buttonSubmit" type="Submit" value="Save">
-<!-- onClick="setEditMode(false);return validate();"> -->
+<div id="detales" hidden>
+ <div align="center" id="detText"></div>
+ <div align="center" id="actions">
+  <input hidden id="buttonEdit" type="button" value="Edit" onClick="setEdit(lastForm,true);buttonEdit.hidden=true;buttonSubmit.hidden=false;return true;">
+  <input hidden id="buttonSubmit" type="Submit" value="Save">
+  <input id="buttonCancel" type="button" value="Cancel" onClick="getElementById('detales').hidden=true;return true;">
+ </div>
 </div>
-</form></body>
+</form>
+</div>
+</body>
 </html>

@@ -135,8 +135,15 @@
   <valid>regex</valid>
  </field>
 
- <field type="text" name="cglength">
-  <dbname>child</dbname><dbfield>glength</dbfield>
+ <field type="text" name="cgweeks">
+  <dbname>child</dbname><dbfield>gweeks</dbfield>
+  <label>Gistation length</label>
+  <group>one</group>
+  <valid>regex</valid>
+ </field>
+
+ <field type="text" name="cgdays">
+  <dbname>child</dbname><dbfield>gdays</dbfield>
   <label>Gistation length</label>
   <group>one</group>
   <valid>regex</valid>
@@ -167,7 +174,8 @@
  <field>doctor_id</field>
  <field>phone</field>
  <field>anamnez</field>
- <field>glength</field>
+ <field>gweeks</field>
+ <field>gdays</field>
  <field>weight</field>
  <field>note</field>
  <where>id = {ID}</where>

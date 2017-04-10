@@ -1,7 +1,11 @@
-.box{float:top; width:400px; border-spacing:0px 1px; margin:0 0px 0px 0;border-top:1px solid #EEE;padding: 0 0px 0 0px;text-align:left;}
+#header{top: 0px; right: 0px; width: 100vw; background: #F00;}
+.box{float: top; width:400px; border-spacing:0px 1px; margin:0 0px 0px 0;border-top:1px solid #EEE;padding: 0 0px 0 0px;text-align:left;}
+#detales{position: fixed; top: 0px; left: 0px; width:100vw; height: 100vw; border-spacing:0px 1px; margin:0 0px 0px 0;border-top:1px solid #EEE;padding: 0 0px 0 0px;text-align:left; background: rgba(200,200,200,0.95)}
+#raw{position: fixed; top: 0px; left: 0px; width:100vw; height: 100vh; overflow: scroll; border-spacing:0px 1px; margin:0 0px 0px 0;border-top:1px solid #EEE;padding: 0 0px 0 0px;text-align:left; background: rgba(200,200,200,0.95)}
 .bold{font-size:150%;color:black;font-weight:bold;}
 .hcell{color:black;margin:0;border-left:1px solid #EEE;}
 .htune{color:white;background-color:#777;font-weight: bold;text-align:center;border:1px solid black;width:20px;cursor:pointer;}
+body {border: 0px; margin: 0px; }
 p, form,button{font-size:100%;color:#252525;}
 .small_text{font-size:90%;color:#737373;}
 .odd{background-color:#F0F0F0;}

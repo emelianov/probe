@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8" />
 <title>Loading...</title>
-<link rel="stylesheet" href="/template.css" />
-<script type="text/javascript" src="/xmldata.js"></script>
-<script type="text/javascript" src="/template.js"></script>
-<script type="text/javascript" src="/helper.js"></script>
-<script type="text/javascript" src="/probe.js"></script>
+<link rel="stylesheet" href="template.css" />
+<script type="text/javascript" src="../dbBRiDGE/xmldata.js"></script>
+<script type="text/javascript" src="../dbBRiDGE/template.js"></script>
+<script type="text/javascript" src="../dbBRiDGE/helper.js"></script>
+<script type="text/javascript" src="probe.js"></script>
 <script>
 var IDS = "ids"; //Cookie name used to store selected items
 
@@ -123,6 +123,8 @@ function closeBox(evt) {
 </script>
 
 </head>
+<div id="header">&nbsp;</div>
+<div align=center>
 <body onload='postLoad();'>
 <form method="post" action="/dbBRiDGE/form.php?t=lpu&action=save">
 <div id="header"></div>
@@ -135,5 +137,7 @@ function closeBox(evt) {
 <input hidden id="buttonSubmit" type="Submit" value="Save">
 <!-- onClick="setEditMode(false);return validate();"> -->
 </div>
-</form></body>
+</form>
+</div>
+</body>
 </html>

@@ -26,26 +26,9 @@
 </list>
 
 <db>
- <name>child</name>
- <field>id</field>
- <field>lname</field>
- <field>fname</field>
- <field>mname</field>
- <field>birth</field>
- <field>region_id</field>
- <field>address</field>
- <field>sex</field>
- <field>nn</field>
- <field>doctor_id</field>
- <field>phone</field>
- <field>anamnez</field>
- <field>glength</field>
- <field>weight</field>
- <field>note</field>
+ @inc childdb.inc@
  <where>id in ({ID})</where>
  <order>id</order>
 </db>
-<db><name>doctor</name><field>id</field><field>name</field><order>name</order></db>
-<db><name>lpu</name><field>id</field><field>name</field></db>
-<db><name>region</name><field>id</field><field>name</field></db>
+ @inc childext.inc@
 </page>
