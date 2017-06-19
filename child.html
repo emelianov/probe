@@ -149,10 +149,12 @@ function newChild() {
       data = got.page[0].data[0];		//DATA part
       if (typeof got.page[0].form !== 'undefined') {
        form = got.page[0].form[0];			//LIST template
-       var selectBox = document.getElementById('box');
+       var selectBox = document.getElementById('detText');
        clear(selectBox);
        showForm(selectBox, form, data);
 	setEdit(form, true);
+     var detales = document .getElementById('detales');
+     detales.hidden = false;
 	document.getElementById('buttonEdit').hidden=true;
 	document.getElementById('buttonSubmit').hidden=false;
       }
@@ -194,6 +196,30 @@ function postLoad() {
  document.getElementById('file-input').addEventListener('change', readSingleFile, false);
  readFileCallback = readCallback;
 }
+function saveProbes() {
+   if(this.readyState==4 && this.status==200) {
+    var resp=this.responseXML;
+    if(resp!=null){
+     var got = new XmlData(resp);			//Convert XML to array
+    var form;
+    var data;
+    if (typeof got.page[0].data !== 'undefined') {
+      data = got.page[0].data[0];		//DATA part
+      if (typeof got.page[0].form !== 'undefined') {
+       form = got.page[0].form[0];			//LIST template
+       var selectBox = document.getElementById('detText');
+       clear(selectBox);
+       showForm(selectBox, form, data);
+	setEdit(form, true);
+     var detales = document .getElementById('detales');
+     detales.hidden = false;
+	document.getElementById('buttonEdit').hidden=true;
+	document.getElementById('buttonSubmit').hidden=false;
+      }
+    }
+   }
+  }
+}
 </script>
 
 </head>
@@ -208,6 +234,7 @@ function postLoad() {
 <input type="button" value="New" onClick="get('/dbBRiDGE/form.php?t=child&action=new',newChild);return true;">
 <input type="button" value="Clear" onClick="setCookie(IDS, '', 1);return true;">
 <input type="file" id="file-input" onChange="readSingleFile();return true;">
+<input type="button" value="Save" onClick="get('/dbBRiDGE/form.php?t=probe&action=new&ID=1',saveProbes);return true;">
 <input type="button" value="Raw data" onClick="el = document.getElementById('raw'); el.hidden = !el.hidden; return true;">
 
 <div hidden id="raw">

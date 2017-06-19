@@ -1,0 +1,151 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+<page>
+
+ <header>{ID}</header>
+ <label>{TITLE}</label>
+
+<list name="children">
+ <col>
+  <db>child</db><field>id</field>
+  <link>show</link>
+ </col>
+ <col>
+  <db>child</db><field>lname</field>
+ </col>
+ <col>
+  <db>child</db><field>fname</field>
+ </col> 
+ <col>
+  <db>child</db><field>mname</field>
+ </col>
+</list>
+
+<form>
+
+ <field type="hidden" name="did">
+  <dbname>probe</dbname><dbfield>id</dbfield>
+  <readonly>1</readonly>
+ </field>
+
+ <field type="date" name="cdate">
+  <dbname>child</dbname><dbfield>tdate</dbfield>
+  <label>Child birthday (DD.MM.YYYY)</label>
+  <group>one</group>
+  <defaultvalue>2016-01-01</defaultvalue>
+  <valid>regex</valid>
+ </field>
+
+ <field type="select" name="cregid">
+  <dbname>probe</dbname><dbfield>child_id</dbfield>
+  <label>Child</label>
+  <help>Выберите значение</help>
+  <readonly>1</readonly>
+
+  <dic type="static" name="regidl">
+   <dbname>child</dbname> <text>fname</text> <value>id</value>
+  </dic>
+ </field>
+
+ <field type="select" name="csex">
+  <dbname>child</dbname><dbfield>sex</dbfield>
+  <label>Sex</label>
+  <help>Выберите значение</help>
+  <readonly>1</readonly>
+
+  <dic type="const" name="csexl">
+   <text>Male</text><value>0</value>
+   <text>Famale</text><value>1</value>
+  </dic>
+ </field>
+
+ <field type="text" name="cblank">
+  <dbname>probe</dbname><dbfield>blank</dbfield>
+  <label>BLANK</label>
+  <group>one</group>
+  <valid>regex</valid>
+ </field>
+
+ <field type="text" name="cset">
+  <dbname>probe</dbname><dbfield>set_nr</dbfield>
+  <label>SET</label>
+  <group>one</group>
+  <valid>regex</valid>
+ </field>
+
+ <field type="text" name="cprobe">
+  <dbname>probe</dbname><dbfield>probe_nr</dbfield>
+  <label>PROBE</label>
+  <group>one</group>
+  <valid>regex</valid>
+ </field>
+
+ <field type="text" name="cdoctor">
+  <dbname>probe</dbname><dbfield>tdoctor</dbfield>
+  <label>Doctor name</label>
+  <group>one</group>
+  <valid>regex</valid>
+ </field>
+
+ <field type="date" name="cadate">
+  <dbname>child</dbname><dbfield>adate</dbfield>
+  <label>Child birthday (DD.MM.YYYY)</label>
+  <group>one</group>
+  <defaultvalue>2016-01-01</defaultvalue>
+  <valid>regex</valid>
+ </field>
+
+ <field type="text" name="cp1">
+  <dbname>probe</dbname><dbfield>p1</dbfield>
+  <label>P1</label>
+  <group>two</group>
+ </field>
+
+ <field type="text" name="cp2">
+  <dbname>probe</dbname><dbfield>p2</dbfield>
+  <label>P2</label>
+  <group>two</group>
+ </field>
+
+ <field type="text" name="cp3">
+  <dbname>probe</dbname><dbfield>p3</dbfield>
+  <label>P3</label>
+  <group>two</group>
+ </field>
+
+ <field type="text" name="cp4">
+  <dbname>probe</dbname><dbfield>p4</dbfield>
+  <label>P4</label>
+  <group>two</group>
+ </field>
+
+ <field type="text" name="cp5">
+  <dbname>probe</dbname><dbfield>p5</dbfield>
+  <label>P5</label>
+  <group>two</group>
+ </field>
+
+ <onsave>/probe.html?id=</onsave>
+
+</form>
+
+<db>
+ <name>child</name>
+ <field>id</field>
+ <field>lname</field>
+ <field>fname</field>
+ <field>mname</field>
+ <field>birth</field>
+ <field>region_id</field>
+ <field>address</field>
+ <field>sex</field>
+ <field>nn</field>
+ <field>doctor_id</field>
+ <field>phone</field>
+ <field>anamnez</field>
+ <field>gweeks</field>
+ <field>gdays</field>
+ <field>weight</field>
+ <field>note</field>
+ <where>id = {ID}</where>
+</db>
+</page>

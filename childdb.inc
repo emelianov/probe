@@ -1,0 +1,17 @@
+ <name>child</name>
+ <field>id</field>
+ <field>lname</field>
+ <field>fname</field>
+ <field>mname</field>
+ <field>birth</field>
+ <field>region_id</field>
+ <field>address</field>
+ <field>sex</field>
+ <field>nn</field>
+ <field>doctor_id</field>
+ <field>phone</field>
+ <field>anamnez</field>
+ <field>gweeks</field>
+ <field>gdays</field>
+ <field>weight</field>
+ <field>note</field>

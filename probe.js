@@ -69,7 +69,7 @@ for (j = 0; j < T.length; j++) {
  if (p > 0) {
   tp = j;
   alert(p + " " + j);
-  dt = t.substring(p,40);
+  dt = t.substr(p,40);
   alert(dt);
   break;
  }
